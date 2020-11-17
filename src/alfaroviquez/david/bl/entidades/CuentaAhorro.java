@@ -2,8 +2,11 @@ package alfaroviquez.david.bl.entidades;
 
 import java.time.LocalDate;
 
+
 public class CuentaAhorro extends Cuenta {
     private double tasaInteres;
+    public static int incremento = 1;
+    private int numeroCuenta = 2000000;
 
     public double getTasaInteres() {
         return tasaInteres;
@@ -13,12 +16,21 @@ public class CuentaAhorro extends Cuenta {
         this.tasaInteres = tasaInteres;
     }
 
+    public int getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(int numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
     public CuentaAhorro() {
     }
 
-    public CuentaAhorro(String numeroCuenta, double saldo, LocalDate fechaApertura, double tasaInteres) {
-        super(numeroCuenta, saldo, fechaApertura);
+    public CuentaAhorro(double saldo, LocalDate fechaApertura, double tasaInteres) {
+        super(saldo, fechaApertura);
         this.tasaInteres = tasaInteres;
+        this.numeroCuenta = numeroCuenta+incremento;
     }
 
     @Override
@@ -31,13 +43,14 @@ public class CuentaAhorro extends Cuenta {
                 "} " + super.toString();
     }
 
+
     @Override
-    public void retiros() {
+    public void retiros(double monto) {
 
     }
 
     @Override
-    public void depositos() {
+    public void depositos(double monto) {
 
     }
 

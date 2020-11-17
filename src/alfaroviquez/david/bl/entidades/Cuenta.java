@@ -6,18 +6,14 @@ import alfaroviquez.david.bl.interfaces.SerializacionCSV;
 
 import java.time.LocalDate;
 
+
 public abstract class Cuenta implements Movimientos, SerializacionCSV {
-    protected String numeroCuenta;
+
+
     protected double saldo;
     protected LocalDate fechaApertura;
 
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
 
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
 
     public double getSaldo() {
         return saldo;
@@ -38,14 +34,14 @@ public abstract class Cuenta implements Movimientos, SerializacionCSV {
     public Cuenta() {
     }
 
-    public Cuenta(String numeroCuenta, double saldo, LocalDate fechaApertura) {
-        this.numeroCuenta = numeroCuenta;
+    public Cuenta( double saldo, LocalDate fechaApertura) {
+
         this.saldo = saldo;
         this.fechaApertura = fechaApertura;
     }
     public  Cuenta(String sourceLines){
         String[] datos = sourceLines.split(",");
-        this.numeroCuenta=datos[0];
+
         this.saldo= Double.parseDouble(datos[1]);
         this.fechaApertura= LocalDate.parse(datos[2]);
     }
@@ -53,9 +49,9 @@ public abstract class Cuenta implements Movimientos, SerializacionCSV {
     @Override
     public String toString() {
         return "Cuenta{" +
-                "numeroCuenta='" + numeroCuenta + '\'' +
                 ", saldo=" + saldo +
                 ", fechaApertura=" + fechaApertura +
                 '}';
     }
+
 }

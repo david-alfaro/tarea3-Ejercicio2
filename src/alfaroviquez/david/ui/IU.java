@@ -11,7 +11,9 @@ public class IU {
         output.println("*****BANCO LOS LAVADORES*****");
         output.println("1. Registrar Cliente");
         output.println("2. Listar Clientes");
-        output.println("3. Salir");
+        output.println("3. Registrar Cuenta Corriente");
+        output.println("4. Listar Cuenta Corriente");
+        output.println("5. Salir");
 
     }
 

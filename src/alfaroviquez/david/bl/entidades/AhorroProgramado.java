@@ -1,9 +1,13 @@
 package alfaroviquez.david.bl.entidades;
 
+import java.awt.desktop.AboutEvent;
 import java.time.LocalDate;
+
 
 public class AhorroProgramado extends Cuenta {
     private CuentaAhorro cuenta;
+    public static int incremento = 1;
+    private int numeroCuenta = 3000000;
 
     public CuentaAhorro getCuenta() {
         return cuenta;
@@ -13,12 +17,21 @@ public class AhorroProgramado extends Cuenta {
         this.cuenta = cuenta;
     }
 
+    public int getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public void setNumeroCuenta(int numeroCuenta) {
+        this.numeroCuenta = numeroCuenta;
+    }
+
     public AhorroProgramado() {
     }
 
-    public AhorroProgramado(String numeroCuenta, double saldo, LocalDate fechaApertura, CuentaAhorro cuenta) {
-        super(numeroCuenta, saldo, fechaApertura);
+    public AhorroProgramado(double saldo, LocalDate fechaApertura, CuentaAhorro cuenta) {
+        super(saldo, fechaApertura);
         this.cuenta = cuenta;
+        this.numeroCuenta = numeroCuenta+incremento;
     }
 
     @Override
@@ -31,13 +44,14 @@ public class AhorroProgramado extends Cuenta {
                 "} " + super.toString();
     }
 
+
     @Override
-    public void retiros() {
+    public void retiros(double monto) {
 
     }
 
     @Override
-    public void depositos() {
+    public void depositos(double monto) {
 
     }
 
