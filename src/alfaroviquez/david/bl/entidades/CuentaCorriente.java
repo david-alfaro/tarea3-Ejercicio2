@@ -29,4 +29,9 @@ public class CuentaCorriente extends Cuenta {
                 ", fechaApertura=" + fechaApertura +
                 "} " + super.toString();
     }
+
+    @Override
+    public String toCSVLine() {
+        return null;
+    }
 }

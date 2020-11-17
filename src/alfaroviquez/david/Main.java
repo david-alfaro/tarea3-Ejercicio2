@@ -1,8 +1,11 @@
 package alfaroviquez.david;
 
+import alfaroviquez.david.controlador.Controlador;
+
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+        Controlador controlador = new Controlador();
+        controlador.ejecutar();
     }
 }

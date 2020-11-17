@@ -2,10 +2,11 @@ package alfaroviquez.david.bl.entidades;
 
 
 import alfaroviquez.david.bl.interfaces.Movimientos;
+import alfaroviquez.david.bl.interfaces.SerializacionCSV;
 
 import java.time.LocalDate;
 
-public abstract class Cuenta implements Movimientos {
+public abstract class Cuenta implements Movimientos, SerializacionCSV {
     protected String numeroCuenta;
     protected double saldo;
     protected LocalDate fechaApertura;
@@ -41,6 +42,12 @@ public abstract class Cuenta implements Movimientos {
         this.numeroCuenta = numeroCuenta;
         this.saldo = saldo;
         this.fechaApertura = fechaApertura;
+    }
+    public  Cuenta(String sourceLines){
+        String[] datos = sourceLines.split(",");
+        this.numeroCuenta=datos[0];
+        this.saldo= Double.parseDouble(datos[1]);
+        this.fechaApertura= LocalDate.parse(datos[2]);
     }
 
     @Override

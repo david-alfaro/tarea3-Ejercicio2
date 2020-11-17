@@ -40,4 +40,9 @@ public class CuentaAhorro extends Cuenta {
     public void depositos() {
 
     }
+
+    @Override
+    public String toCSVLine() {
+        return null;
+    }
 }
