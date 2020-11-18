@@ -1,7 +1,7 @@
 package alfaroviquez.david.persistencia;
 
 import alfaroviquez.david.bl.entidades.Cuenta;
-import alfaroviquez.david.bl.entidades.CuentaCorriente;
+import alfaroviquez.david.bl.entidades.CuentaAhorro;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,13 +14,13 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuentaCorrienteDAO extends CuentaDAO {
+public class CuentaAhorroDAO extends CuentaDAO{
     @Override
     public void save(Cuenta nuevaCuente) {
         ArrayList<String> lineas = new ArrayList<>();
         lineas.add(nuevaCuente.toCSVLine());
         try{
-            Files.write(Paths.get("c:\\dev\\listaCuentasCorrientes.csv"),lineas, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+            Files.write(Paths.get("c:\\dev\\listaCuentasAhorro.csv"),lineas, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND);
         }catch (IOException e){
             e.printStackTrace();
@@ -32,11 +32,11 @@ public class CuentaCorrienteDAO extends CuentaDAO {
         ArrayList<Cuenta> result = new ArrayList<>();
         BufferedReader reader;
         try{
-            reader = new BufferedReader(new FileReader("c:\\dev\\listaCuentasCorrientes.csv"));
+            reader = new BufferedReader(new FileReader("c:\\dev\\listaCuentasAhorro.csv"));
             String currentLine = reader.readLine();
             while (currentLine!=null){
-                result.add(new CuentaCorriente(currentLine));
-                currentLine = reader.readLine();
+                result.add(new CuentaAhorro(currentLine));
+                currentLine=reader.readLine();
             }
         }catch (FileNotFoundException e){
             e.printStackTrace();

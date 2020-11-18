@@ -28,7 +28,7 @@ public class CuentaCorriente extends Cuenta {
         String[] datos = sourceLines.split(",");
         this.numeroCuenta = Integer.parseInt(datos[0]);
         this.saldo = Double.parseDouble(datos[1]);
-        this.fechaApertura = LocalDate.parse(datos[1]);
+        this.fechaApertura = LocalDate.parse(datos[2]);
     }
 
 

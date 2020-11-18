@@ -33,6 +33,14 @@ public class CuentaAhorro extends Cuenta {
         this.numeroCuenta = numeroCuenta+incremento;
     }
 
+    public CuentaAhorro(String sourceLines){
+        String[] datos = sourceLines.split(",");
+        this.numeroCuenta= Integer.parseInt(datos[0]);
+        this.saldo= Double.parseDouble(datos[1]);
+        this.fechaApertura = LocalDate.parse(datos[2]);
+        this.tasaInteres = Double.parseDouble(datos[3]);
+    }
+
     @Override
     public String toString() {
         return "CuentaAhorro{" +
@@ -56,6 +64,7 @@ public class CuentaAhorro extends Cuenta {
 
     @Override
     public String toCSVLine() {
-        return null;
+
+        return this.numeroCuenta+","+this.saldo+","+this.fechaApertura+","+this.tasaInteres;
     }
 }

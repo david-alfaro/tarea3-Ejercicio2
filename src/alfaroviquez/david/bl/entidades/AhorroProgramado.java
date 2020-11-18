@@ -1,19 +1,20 @@
 package alfaroviquez.david.bl.entidades;
 
-import java.awt.desktop.AboutEvent;
+
 import java.time.LocalDate;
 
 
 public class AhorroProgramado extends Cuenta {
-    private CuentaAhorro cuenta;
+    private CuentaCorriente cuenta;
+    private double montoAhorro;
     public static int incremento = 1;
     private int numeroCuenta = 3000000;
 
-    public CuentaAhorro getCuenta() {
+    public CuentaCorriente getCuenta() {
         return cuenta;
     }
 
-    public void setCuenta(CuentaAhorro cuenta) {
+    public void setCuenta(CuentaCorriente cuenta) {
         this.cuenta = cuenta;
     }
 
@@ -25,13 +26,30 @@ public class AhorroProgramado extends Cuenta {
         this.numeroCuenta = numeroCuenta;
     }
 
+    public double getMontoAhorro() {
+        return montoAhorro;
+    }
+
+    public void setMontoAhorro(double montoAhorro) {
+        this.montoAhorro = montoAhorro;
+    }
+
     public AhorroProgramado() {
     }
 
-    public AhorroProgramado(double saldo, LocalDate fechaApertura, CuentaAhorro cuenta) {
+    public AhorroProgramado(double saldo, LocalDate fechaApertura, CuentaCorriente cuenta, double montoAhorro) {
         super(saldo, fechaApertura);
         this.cuenta = cuenta;
         this.numeroCuenta = numeroCuenta+incremento;
+    }
+    public AhorroProgramado(String sourceLines){
+        String[] datos = sourceLines.split(",");
+        this.numeroCuenta = Integer.parseInt(datos[0]);
+        this.saldo = Double.parseDouble(datos[1]);
+        this.fechaApertura = LocalDate.parse(datos[2]);
+        String cuentaAhorro = cuenta.toString();
+        cuentaAhorro = datos[3];
+        this.montoAhorro = Double.parseDouble(datos[4]);
     }
 
     @Override
@@ -57,6 +75,6 @@ public class AhorroProgramado extends Cuenta {
 
     @Override
     public String toCSVLine() {
-        return null;
+        return this.numeroCuenta+","+this.saldo+","+this.fechaApertura+","+this.cuenta+","+this.montoAhorro;
     }
 }

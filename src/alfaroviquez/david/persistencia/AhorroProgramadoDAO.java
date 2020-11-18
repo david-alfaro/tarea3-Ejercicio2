@@ -1,7 +1,7 @@
 package alfaroviquez.david.persistencia;
 
+import alfaroviquez.david.bl.entidades.AhorroProgramado;
 import alfaroviquez.david.bl.entidades.Cuenta;
-import alfaroviquez.david.bl.entidades.CuentaCorriente;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -14,28 +14,28 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuentaCorrienteDAO extends CuentaDAO {
+public class AhorroProgramadoDAO extends CuentaDAO {
     @Override
     public void save(Cuenta nuevaCuente) {
         ArrayList<String> lineas = new ArrayList<>();
         lineas.add(nuevaCuente.toCSVLine());
         try{
-            Files.write(Paths.get("c:\\dev\\listaCuentasCorrientes.csv"),lineas, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
+            Files.write(Paths.get("c:\\dev\\listaCuentasAhorroProgramado.csv"),lineas, StandardCharsets.UTF_8, StandardOpenOption.CREATE,
                     StandardOpenOption.APPEND);
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public List<Cuenta> findAll() {
-        ArrayList<Cuenta> result = new ArrayList<>();
+        ArrayList<Cuenta> resul = new ArrayList<>();
         BufferedReader reader;
         try{
-            reader = new BufferedReader(new FileReader("c:\\dev\\listaCuentasCorrientes.csv"));
+            reader = new BufferedReader(new FileReader("c:\\dev\\listaCuentasAhorroProgramado.csv"));
             String currentLine = reader.readLine();
-            while (currentLine!=null){
-                result.add(new CuentaCorriente(currentLine));
+            while(currentLine!=null){
+                resul.add(new AhorroProgramado(currentLine));
                 currentLine = reader.readLine();
             }
         }catch (FileNotFoundException e){
@@ -43,6 +43,6 @@ public class CuentaCorrienteDAO extends CuentaDAO {
         }catch (IOException e){
             e.printStackTrace();
         }
-        return result;
+        return null;
     }
 }
