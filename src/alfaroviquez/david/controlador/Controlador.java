@@ -1,5 +1,6 @@
 package alfaroviquez.david.controlador;
 
+import alfaroviquez.david.bl.entidades.Cliente;
 import alfaroviquez.david.bl.entidades.Cuenta;
 import alfaroviquez.david.bl.entidades.CuentaCorriente;
 import alfaroviquez.david.bl.logica.Gestor;
@@ -105,6 +106,56 @@ public class Controlador {
         interfaz.imprimirMensaje("Ahorro programado registrado");
     }
 
+   private List<Cuenta> listaCuentaCorriente(){
+        List<Cuenta> list = gestor.findCuentasCorrientes();
+        return list;
+   }
+
+   private List<Cliente> listaClientes(){
+        List<Cliente> lista = gestor.findClientes();
+        return lista;
+   }
+   private Cliente buscarClienteporID(int idCliente){
+        List<Cliente> listaClientes = listaClientes();
+        for (int i=0;i<listaClientes.size();i++){
+            Cliente clienteActual = listaClientes.get(i);
+            if(clienteActual.getIdentificacion()==idCliente){
+                return clienteActual;
+            }
+        }
+        return null;
+   }
+   private Cuenta buscarCuentaCorriente(int numeroCuenta){
+        List<Cuenta> listaCuentas = listaCuentaCorriente();
+        for(int i=0;i<listaCuentas.size();i++){
+            Cuenta cuentaActual = listaCuentas.get(i);
+            if(cuentaActual.getNumCuenta()==numeroCuenta){
+                return cuentaActual;
+            }
+        }
+        return null;
+   }
+
+   private void asginarCuentaCorrienteACliente(){
+       for (Cliente cliente: gestor.findClientes()
+            ) {
+           interfaz.imprimirMensaje(cliente.toCSVLine());
+       }
+        interfaz.imprimirMensaje("Numero de cedula del cliente: ");
+        int cedula = interfaz.leerNumero();
+        Cliente cliente = buscarClienteporID(cedula);
+        interfaz.imprimirMensaje("Numero de cuenta a asociar: ");
+       for (Cuenta cuenta: gestor.findCuentasCorrientes()
+            ) {
+           interfaz.imprimirMensaje(cuenta.toCSVLine());
+       }
+        int numeroCuenta = interfaz.leerNumero();
+        Cuenta cuentaCorriente = buscarCuentaCorriente(numeroCuenta);
+        cliente.getCuentas().add(cuentaCorriente);
+        interfaz.imprimirMensaje("Cuenta "+numeroCuenta+" ligada al cliente "+cedula);
+   }
+
+
     private void listarCuentas() {
         int opcion2 = 0;
         do {
@@ -164,6 +215,7 @@ public class Controlador {
                 registrarAhorroProgramado();
                 break;
             case 4:
+                asginarCuentaCorrienteACliente();
                 break;
             case 5:
                 break;

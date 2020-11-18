@@ -48,4 +48,9 @@ public class Gestor {
     public List<Cuenta >findSAhorrosProgramados(){
         return ahorroProgramadoRepo.findAll();
     }
+    public List<Cliente> findClientes(){
+        return clienteRepo.getAll();
+    }
+
+
 }

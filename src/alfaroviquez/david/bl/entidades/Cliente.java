@@ -8,7 +8,7 @@ public class Cliente implements SerializacionCSV {
     private String nombre;
     private int identificacion;
     private String direccion;
-    private ArrayList<Cuenta> cuentas;
+    private ArrayList<Cuenta> cuentas = new ArrayList<>();
 
     public String getNombre() {
         return nombre;
@@ -51,28 +51,14 @@ public class Cliente implements SerializacionCSV {
         this.direccion = direccion;
         this.cuentas = cuentas;
     }
-    private String[] ArrayToStr(ArrayList<Cuenta> arr){
-        String[] cuentasToSTR = new String[cuentas.size()];
-        for(int i=0;i<cuentas.size();i++){
-            cuentasToSTR[i]= String.valueOf(cuentas.get(i));
-        }
 
-        return cuentasToSTR;
-    }
-    private String arraySTR(String[] arr){
-        arr.toString();
-        return String.valueOf(arr);
-    }
 
     public Cliente(String sourceLines){
         String[] datos = sourceLines.split(",");
         this.nombre = datos[0];
         this.identificacion=Integer.parseInt(datos[1]);
         this.direccion = datos[2];
-        String[] cuentasTostr = ArrayToStr(cuentas);
-        String cuentasCliente = arraySTR(cuentasTostr);
 
-        cuentasCliente = datos[3];
     }
 
     @Override
@@ -86,6 +72,6 @@ public class Cliente implements SerializacionCSV {
     }
     @Override
     public String toCSVLine(){
-        return this.nombre+","+this.identificacion+","+this.direccion+","+this.cuentas;
+        return this.nombre+","+this.identificacion+","+this.direccion;
     }
 }

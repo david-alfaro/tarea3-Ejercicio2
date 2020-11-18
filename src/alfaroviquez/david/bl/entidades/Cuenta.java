@@ -9,11 +9,18 @@ import java.time.LocalDate;
 
 public abstract class Cuenta implements Movimientos, SerializacionCSV {
 
-
+    protected int numCuenta;
     protected double saldo;
     protected LocalDate fechaApertura;
 
 
+    public int getNumCuenta() {
+        return numCuenta;
+    }
+
+    public void setNumCuenta(int numCuenta) {
+        this.numCuenta = numCuenta;
+    }
 
     public double getSaldo() {
         return saldo;
