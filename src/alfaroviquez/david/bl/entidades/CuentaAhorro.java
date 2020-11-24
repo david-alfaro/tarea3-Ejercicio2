@@ -54,12 +54,12 @@ public class CuentaAhorro extends Cuenta {
 
     @Override
     public void retiros(double monto) {
-
+        this.saldo = this.saldo - monto;
     }
 
     @Override
     public void depositos(double monto) {
-
+        this.saldo = this.saldo + monto;
     }
 
     @Override

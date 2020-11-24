@@ -27,8 +27,10 @@ public class IU {
         output.println("1. Registar Cuenta Corrientes");
         output.println("2. Registrar Cuenta de Ahorro");
         output.println("3. Registrar Cuenta de Ahorro Programado");
-        output.println("4. Asociar cliente a cuenta");
-        output.println("5. Volver");
+        output.println("4. Asociar cliente a cuenta corriente");
+        output.println("5. Asociar cliente a cuenta ahorro");
+        output.println("6. Asociar ahorro programado a cuenta de ahorro");
+        output.println("7. Volver");
     }
 
     public void subMenu(){
@@ -39,6 +41,22 @@ public class IU {
         output.println("2. Listar Cuentas de Ahorro");
         output.println("3. Listar Cuentas de Ahorro Programado");
         output.println("4. Volver");
+    }
+    public void subMenu3(){
+        output.println("--------------------------");
+        output.println("DEPOSITOS");
+        output.println("-------------------------");
+        output.println("1. Deposito en Cuentas Corrientes");
+        output.println("2. Deposito en Cuentas de Ahorro");
+        output.println("3. Volver");
+    }
+    public void subMenu4(){
+        output.println("--------------------------");
+        output.println("RETIROS");
+        output.println("-------------------------");
+        output.println("1. Retiro en Cuentas Corrientes");
+        output.println("2. Retiro en Cuentas de Ahorro");
+        output.println("3. Volver");
     }
 
 

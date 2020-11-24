@@ -1,5 +1,6 @@
 package alfaroviquez.david.controlador;
 
+import alfaroviquez.david.bl.entidades.AhorroProgramado;
 import alfaroviquez.david.bl.entidades.Cliente;
 import alfaroviquez.david.bl.entidades.Cuenta;
 import alfaroviquez.david.bl.entidades.CuentaCorriente;
@@ -30,17 +31,19 @@ public class Controlador {
                 registrarCliente();
                 break;
             case 2:
+                listarClientesBanco();
                 break;
             case 3:
                 registroCuentas();
                 break;
             case 4:
-
+                listarCuentas();
                 break;
             case 5:
+                depositos();
                 break;
             case 6:
-                listarCuentas();
+                retiros();
                 break;
             case 7:
                 break;
@@ -106,54 +109,66 @@ public class Controlador {
         interfaz.imprimirMensaje("Ahorro programado registrado");
     }
 
-   private List<Cuenta> listaCuentaCorriente(){
-        List<Cuenta> list = gestor.findCuentasCorrientes();
-        return list;
-   }
 
-   private List<Cliente> listaClientes(){
-        List<Cliente> lista = gestor.findClientes();
-        return lista;
-   }
-   private Cliente buscarClienteporID(int idCliente){
-        List<Cliente> listaClientes = listaClientes();
-        for (int i=0;i<listaClientes.size();i++){
-            Cliente clienteActual = listaClientes.get(i);
-            if(clienteActual.getIdentificacion()==idCliente){
-                return clienteActual;
-            }
+    private void listarClientesBanco() {
+        for (Cliente cliente : gestor.findClientes()
+        ) {
+            interfaz.imprimirMensaje(cliente.toCSVLine());
         }
-        return null;
-   }
-   private Cuenta buscarCuentaCorriente(int numeroCuenta){
-        List<Cuenta> listaCuentas = listaCuentaCorriente();
-        for(int i=0;i<listaCuentas.size();i++){
-            Cuenta cuentaActual = listaCuentas.get(i);
-            if(cuentaActual.getNumCuenta()==numeroCuenta){
-                return cuentaActual;
-            }
-        }
-        return null;
-   }
+    }
 
-   private void asginarCuentaCorrienteACliente(){
-       for (Cliente cliente: gestor.findClientes()
-            ) {
-           interfaz.imprimirMensaje(cliente.toCSVLine());
-       }
+    private void asginarCuentaCorrienteACliente() {
+        for (Cliente cliente : gestor.findClientes()
+        ) {
+            interfaz.imprimirMensaje(cliente.toCSVLine());
+        }
         interfaz.imprimirMensaje("Numero de cedula del cliente: ");
         int cedula = interfaz.leerNumero();
-        Cliente cliente = buscarClienteporID(cedula);
+        Cliente cliente = gestor.buscarClienteporID(cedula);
         interfaz.imprimirMensaje("Numero de cuenta a asociar: ");
-       for (Cuenta cuenta: gestor.findCuentasCorrientes()
-            ) {
-           interfaz.imprimirMensaje(cuenta.toCSVLine());
-       }
+        for (Cuenta cuenta : gestor.findCuentasCorrientes()
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
         int numeroCuenta = interfaz.leerNumero();
-        Cuenta cuentaCorriente = buscarCuentaCorriente(numeroCuenta);
+        Cuenta cuentaCorriente = gestor.buscarCuentaCC(numeroCuenta);
         cliente.getCuentas().add(cuentaCorriente);
-        interfaz.imprimirMensaje("Cuenta "+numeroCuenta+" ligada al cliente "+cedula);
-   }
+        interfaz.imprimirMensaje("Cuenta " + numeroCuenta + " ligada al cliente " + cedula);
+    }
+
+    private void asignarCuentaAhorrosACliente() {
+        for (Cliente cliente : gestor.findClientes()
+        ) {
+            interfaz.imprimirMensaje(cliente.toCSVLine());
+        }
+        interfaz.imprimirMensaje("Numero de cedula del cliente: ");
+        int cedula = interfaz.leerNumero();
+        Cliente cliente = gestor.buscarClienteporID(cedula);
+        for (Cuenta cuenta : gestor.findCuentasAhorros()
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        int numeroCuenta = interfaz.leerNumero();
+        Cuenta cuentaAhorro = gestor.buscarCuentasAhorro(numeroCuenta);
+        cliente.getCuentas().add(cuentaAhorro);
+        interfaz.imprimirMensaje("Cuenta " + numeroCuenta + " ligada al cliente " + cedula);
+    }
+
+    private void asignarAhorroProgrmadoACuentaCorriente() {
+        for (Cuenta cuenta : gestor.findCuentasCorrientes()
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        int numeroCuenta = interfaz.leerNumero();
+        Cuenta cuentaCorriente = gestor.buscarCuentaCC(numeroCuenta);
+        for (Cuenta cuenta : gestor.findSAhorrosProgramados()
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        int ahorroProgramado = interfaz.leerNumero();
+        AhorroProgramado cuentaAhorroProgramado = (AhorroProgramado) gestor.buscarAhorroProgramado(ahorroProgramado);
+        cuentaAhorroProgramado.setCuenta((CuentaCorriente) cuentaCorriente);
+    }
 
 
     private void listarCuentas() {
@@ -200,7 +215,7 @@ public class Controlador {
             opcion3 = interfaz.leerNumero();
             procesarSubMenu2(opcion3);
 
-        } while (opcion3 != 5);
+        } while (opcion3 != 7);
     }
 
     private void procesarSubMenu2(int opcion3) {
@@ -218,10 +233,130 @@ public class Controlador {
                 asginarCuentaCorrienteACliente();
                 break;
             case 5:
+                asignarCuentaAhorrosACliente();
+                break;
+            case 6:
+                asignarAhorroProgrmadoACuentaCorriente();
+                break;
+            case 7:
                 break;
             default:
                 interfaz.imprimirMensaje("Opcion desconocida");
         }
+    }
+
+    private void depositos() {
+        int opcion = 0;
+        do {
+            interfaz.subMenu3();
+            opcion = interfaz.leerNumero();
+            procesarSubMenu3(opcion);
+        } while (opcion != 3);
+    }
+
+    private void procesarSubMenu3(int opcion) {
+        switch (opcion) {
+            case 1:
+                depositarEnCuentaCorriente();
+                break;
+            case 2:
+                depositarEnCuentaAhorro();
+                break;
+            case 3:
+                break;
+            default:
+                interfaz.imprimirMensaje("Opcion no valida");
+        }
+    }
+
+    private void depositarEnCuentaCorriente() {
+        interfaz.imprimirMensaje("Identificacion del cliente: ");
+        int id = interfaz.leerNumero();
+        Cliente unCliente = gestor.buscarClienteporID(id);
+        List<Cuenta> cuentasCliente = unCliente.getCuentas();
+        for (Cuenta cuenta : cuentasCliente
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
+        int numCuenta = interfaz.leerNumero();
+        interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
+        double monto = interfaz.leerNumero();
+        gestor.depositoCuentaCorriente(numCuenta,monto);
+        interfaz.imprimirMensaje("Deposito realizado exitosamente");
+    }
+    private void depositarEnCuentaAhorro() {
+        interfaz.imprimirMensaje("Identificacion del cliente: ");
+        int id = interfaz.leerNumero();
+        Cliente unCliente = gestor.buscarClienteporID(id);
+        List<Cuenta> cuentasCliente = unCliente.getCuentas();
+        for (Cuenta cuenta : cuentasCliente
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
+        int numCuenta = interfaz.leerNumero();
+        interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
+        double monto = interfaz.leerNumero();
+        gestor.depositoCuentaAhorro(numCuenta,monto);
+        interfaz.imprimirMensaje("Deposito realizado exitosamente");
+    }
+
+    private void retiros(){
+        int opcion=0;
+        do {
+            interfaz.subMenu4();
+            opcion = interfaz.leerNumero();
+            procesarSubMenu4(opcion);
+        }while (opcion!=3);
+    }
+
+    private void procesarSubMenu4(int opcion) {
+        switch (opcion) {
+            case 1:
+                retirodeCuentaCorriente();
+                break;
+            case 2:
+                retirodeCuentaAhorro();
+                break;
+            case 3:
+                break;
+            default:
+                interfaz.imprimirMensaje("Opcion no valida");
+        }
+    }
+
+    private void retirodeCuentaCorriente(){
+        interfaz.imprimirMensaje("Identificacion del cliente: ");
+        int id = interfaz.leerNumero();
+        Cliente unCliente = gestor.buscarClienteporID(id);
+        List<Cuenta> cuentasCliente = unCliente.getCuentas();
+        for (Cuenta cuenta : cuentasCliente
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
+        int numCuenta = interfaz.leerNumero();
+        interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
+        double monto = interfaz.leerNumero();
+        gestor.retiroCC(numCuenta,monto);
+        interfaz.imprimirMensaje("Deposito realizado exitosamente");
+    }
+    private void retirodeCuentaAhorro(){
+        interfaz.imprimirMensaje("Identificacion del cliente: ");
+        int id = interfaz.leerNumero();
+        Cliente unCliente = gestor.buscarClienteporID(id);
+        List<Cuenta> cuentasCliente = unCliente.getCuentas();
+        for (Cuenta cuenta : cuentasCliente
+        ) {
+            interfaz.imprimirMensaje(cuenta.toCSVLine());
+        }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
+        int numCuenta = interfaz.leerNumero();
+        interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
+        double monto = interfaz.leerNumero();
+        gestor.retiroCuentaAhorro(numCuenta,monto);
+        interfaz.imprimirMensaje("Deposito realizado exitosamente");
     }
 
     private LocalDate obtenerFecha(String fecha) {

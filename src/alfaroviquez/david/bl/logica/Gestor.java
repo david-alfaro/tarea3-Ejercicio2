@@ -23,34 +23,102 @@ public class Gestor {
     }
 
     public void guardarCuentaCorriente(double saldo, LocalDate fechaApertura) {
-        CuentaCorriente nuevaCuentaCorriente = new CuentaCorriente(saldo,fechaApertura);
+        CuentaCorriente nuevaCuentaCorriente = new CuentaCorriente(saldo, fechaApertura);
         cuentaCorrienteRepo.save(nuevaCuentaCorriente);
     }
 
-    public void guardarCuentaAhorro(double saldo, LocalDate fechaApertura, double tasaInteres){
-        CuentaAhorro nuevaCuentaAhorro = new CuentaAhorro(saldo,fechaApertura,tasaInteres);
+    public void guardarCuentaAhorro(double saldo, LocalDate fechaApertura, double tasaInteres) {
+        CuentaAhorro nuevaCuentaAhorro = new CuentaAhorro(saldo, fechaApertura, tasaInteres);
         cuentaAhorroRepo.save(nuevaCuentaAhorro);
     }
 
-    public void guardarAhorroProgramado(double saldo, LocalDate fechaApertura, double montoAhorro){
-        AhorroProgramado nuevoAhorroProgramado = new AhorroProgramado(saldo,fechaApertura,new CuentaCorriente(),montoAhorro);
+    public void guardarAhorroProgramado(double saldo, LocalDate fechaApertura, double montoAhorro) {
+        AhorroProgramado nuevoAhorroProgramado = new AhorroProgramado(saldo, fechaApertura, new CuentaCorriente(), montoAhorro);
         ahorroProgramadoRepo.save(nuevoAhorroProgramado);
     }
 
-    public List<Cuenta>findCuentasCorrientes(){
+    public List<Cuenta> findCuentasCorrientes() {
         return cuentaCorrienteRepo.findAll();
     }
 
-    public List<Cuenta>findCuentasAhorros(){
+    public List<Cuenta> findCuentasAhorros() {
         return cuentaAhorroRepo.findAll();
     }
 
-    public List<Cuenta >findSAhorrosProgramados(){
+    public List<Cuenta> findSAhorrosProgramados() {
         return ahorroProgramadoRepo.findAll();
     }
-    public List<Cliente> findClientes(){
+
+    public List<Cliente> findClientes() {
         return clienteRepo.getAll();
     }
 
+    public Cliente buscarClienteporID(int id){
+        List<Cliente> listaClientes = findClientes();
+        for(int i=0;i<listaClientes.size();i++){
+            Cliente clienteActual = listaClientes.get(i);
+            if(clienteActual.getIdentificacion()==id){
+                return clienteActual;
+            }
+        }
+        return null;
+    }
 
+    public Cuenta buscarCuentaCC(int numCuenta){
+        List<Cuenta> ListaCuentasCorrientes = findCuentasCorrientes();
+        for(int i=0; i<ListaCuentasCorrientes.size();i++){
+            Cuenta ccActual = ListaCuentasCorrientes.get(i);
+            if(ccActual.getNumCuenta()==numCuenta){
+                return ccActual;
+            }
+        }
+        return null;
+    }
+
+    public Cuenta buscarCuentasAhorro(int numCuenta){
+        List<Cuenta> ListaCuentasAhorro = findCuentasAhorros();
+        for(int i=0;i<ListaCuentasAhorro.size();i++){
+            Cuenta cuentaActual = ListaCuentasAhorro.get(i);
+            if (cuentaActual.getNumCuenta()==numCuenta){
+                return cuentaActual;
+            }
+        }
+        return null;
+    }
+
+    public Cuenta buscarAhorroProgramado(int numCuenta){
+        List<Cuenta> ListaAhorroProgramado = findSAhorrosProgramados();
+        for(int i=0;i<ListaAhorroProgramado.size();i++){
+            Cuenta cuentaActual = ListaAhorroProgramado.get(i);
+            if (cuentaActual.getNumCuenta()==numCuenta){
+                return cuentaActual;
+            }
+        }
+        return null;
+    }
+    public void depositoCuentaCorriente(int numeroCuenta, double monto) {
+        CuentaCorriente cc = (CuentaCorriente) buscarCuentaCC(numeroCuenta);
+        cc.depositos(monto);
+
+    }
+
+    public void depositoCuentaAhorro(int numeroCuenta, double monto) {
+        CuentaAhorro ca = (CuentaAhorro) buscarCuentasAhorro(numeroCuenta);
+        ca.depositos(monto);
+
+    }
+
+    public void retiroCC(int numeroCuenta, double monto){
+        CuentaCorriente cc = (CuentaCorriente) buscarCuentaCC(numeroCuenta);
+        cc.retiros(monto);
+    }
+
+    public void retiroCuentaAhorro(int numeroCuenta, double monto){
+        CuentaAhorro ca = (CuentaAhorro) buscarCuentasAhorro(numeroCuenta);
+        double saldo = ca.getSaldo();
+        double saldo50 = ca.getSaldo()/2;
+        if(saldo>100000 && monto<saldo50){
+            ca.retiros(monto);
+        }
+    }
 }
