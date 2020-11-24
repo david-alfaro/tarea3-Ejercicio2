@@ -71,4 +71,8 @@ public class IU {
     public void imprimirMensaje(String str){
         output.println(str);
     }
+
+    public void imprimirNumero(double num){
+        output.println(num);
+    }
 }

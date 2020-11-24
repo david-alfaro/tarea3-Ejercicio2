@@ -121,4 +121,17 @@ public class Gestor {
             ca.retiros(monto);
         }
     }
+
+    public Double saldoCuentaCorriente(int numCuenta){
+        CuentaAhorro ca = (CuentaAhorro) buscarCuentasAhorro(numCuenta);
+        double saldo = ca.getSaldo();
+        return saldo;
+    }
+
+    public Double saldoCuentaAhorro(int numCuenta){
+        CuentaCorriente cc = (CuentaCorriente) buscarCuentaCC(numCuenta);
+        double saldo = cc.getSaldo();
+        return saldo;
+    }
+
 }

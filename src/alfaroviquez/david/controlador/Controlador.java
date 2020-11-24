@@ -8,7 +8,6 @@ import alfaroviquez.david.bl.logica.Gestor;
 import alfaroviquez.david.ui.IU;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -130,6 +129,8 @@ public class Controlador {
         ) {
             interfaz.imprimirMensaje(cuenta.toCSVLine());
         }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta a asignar");
+
         int numeroCuenta = interfaz.leerNumero();
         Cuenta cuentaCorriente = gestor.buscarCuentaCC(numeroCuenta);
         cliente.getCuentas().add(cuentaCorriente);
@@ -148,6 +149,7 @@ public class Controlador {
         ) {
             interfaz.imprimirMensaje(cuenta.toCSVLine());
         }
+        interfaz.imprimirMensaje("Ingrese el numero de cuenta a asignar");
         int numeroCuenta = interfaz.leerNumero();
         Cuenta cuentaAhorro = gestor.buscarCuentasAhorro(numeroCuenta);
         cliente.getCuentas().add(cuentaAhorro);
@@ -276,7 +278,7 @@ public class Controlador {
         List<Cuenta> cuentasCliente = unCliente.getCuentas();
         for (Cuenta cuenta : cuentasCliente
         ) {
-            interfaz.imprimirMensaje(cuenta.toCSVLine());
+            interfaz.imprimirMensaje(cuenta.toString());
         }
         interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
         int numCuenta = interfaz.leerNumero();
@@ -284,6 +286,9 @@ public class Controlador {
         double monto = interfaz.leerNumero();
         gestor.depositoCuentaCorriente(numCuenta,monto);
         interfaz.imprimirMensaje("Deposito realizado exitosamente");
+        double saldoCuenta = gestor.saldoCuentaCorriente(numCuenta);
+        interfaz.imprimirMensaje("El saldo de la cuenta es: ");
+        interfaz.imprimirNumero(saldoCuenta);
     }
     private void depositarEnCuentaAhorro() {
         interfaz.imprimirMensaje("Identificacion del cliente: ");
@@ -292,7 +297,7 @@ public class Controlador {
         List<Cuenta> cuentasCliente = unCliente.getCuentas();
         for (Cuenta cuenta : cuentasCliente
         ) {
-            interfaz.imprimirMensaje(cuenta.toCSVLine());
+            interfaz.imprimirMensaje(cuenta.toString());
         }
         interfaz.imprimirMensaje("Ingrese el numero de cuenta: ");
         int numCuenta = interfaz.leerNumero();
@@ -300,6 +305,10 @@ public class Controlador {
         double monto = interfaz.leerNumero();
         gestor.depositoCuentaAhorro(numCuenta,monto);
         interfaz.imprimirMensaje("Deposito realizado exitosamente");
+        double saldoCuenta = gestor.saldoCuentaAhorro(numCuenta);
+        interfaz.imprimirMensaje("El saldo de la cuenta es: ");
+        interfaz.imprimirNumero(saldoCuenta);
+
     }
 
     private void retiros(){
@@ -340,7 +349,10 @@ public class Controlador {
         interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
         double monto = interfaz.leerNumero();
         gestor.retiroCC(numCuenta,monto);
-        interfaz.imprimirMensaje("Deposito realizado exitosamente");
+        interfaz.imprimirMensaje("Retiro realizado exitosamente");
+        double saldoCuenta = gestor.saldoCuentaCorriente(numCuenta);
+        interfaz.imprimirMensaje("El saldo de la cuenta es: ");
+        interfaz.imprimirNumero(saldoCuenta);
     }
     private void retirodeCuentaAhorro(){
         interfaz.imprimirMensaje("Identificacion del cliente: ");
@@ -356,7 +368,10 @@ public class Controlador {
         interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
         double monto = interfaz.leerNumero();
         gestor.retiroCuentaAhorro(numCuenta,monto);
-        interfaz.imprimirMensaje("Deposito realizado exitosamente");
+        interfaz.imprimirMensaje("Retiro realizado exitosamente");
+        double saldoCuenta = gestor.saldoCuentaAhorro(numCuenta);
+        interfaz.imprimirMensaje("El saldo de la cuenta es: ");
+        interfaz.imprimirNumero(saldoCuenta);
     }
 
     private LocalDate obtenerFecha(String fecha) {
