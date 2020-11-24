@@ -6,22 +6,15 @@ import java.time.LocalDate;
 public class CuentaCorriente extends Cuenta {
 
     public static int incremento = 1;
-    private int numeroCuenta = 1000000;
+    private int numeroCuenta =getNumCuenta();
 
-    public int getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(int numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
 
     public CuentaCorriente() {
     }
 
     public CuentaCorriente(double saldo, LocalDate fechaApertura) {
         super(saldo, fechaApertura);
-        this.numeroCuenta = numeroCuenta+incremento;
+        this.numeroCuenta=getNumCuenta()+incremento++;
     }
 
     public CuentaCorriente(String sourceLines) {

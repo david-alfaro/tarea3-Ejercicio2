@@ -29,7 +29,7 @@ public class IU {
         output.println("3. Registrar Cuenta de Ahorro Programado");
         output.println("4. Asociar cliente a cuenta corriente");
         output.println("5. Asociar cliente a cuenta ahorro");
-        output.println("6. Asociar ahorro programado a cuenta de ahorro");
+        output.println("6. Asociar ahorro programado a cuenta corriente");
         output.println("7. Volver");
     }
 

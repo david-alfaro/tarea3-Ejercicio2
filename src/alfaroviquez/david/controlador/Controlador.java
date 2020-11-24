@@ -124,7 +124,6 @@ public class Controlador {
         interfaz.imprimirMensaje("Numero de cedula del cliente: ");
         int cedula = interfaz.leerNumero();
         Cliente cliente = gestor.buscarClienteporID(cedula);
-        interfaz.imprimirMensaje("Numero de cuenta a asociar: ");
         for (Cuenta cuenta : gestor.findCuentasCorrientes()
         ) {
             interfaz.imprimirMensaje(cuenta.toCSVLine());
@@ -161,6 +160,7 @@ public class Controlador {
         ) {
             interfaz.imprimirMensaje(cuenta.toCSVLine());
         }
+        interfaz.imprimirMensaje("Ingrese el numero de CC a vincular: ");
         int numeroCuenta = interfaz.leerNumero();
         Cuenta cuentaCorriente = gestor.buscarCuentaCC(numeroCuenta);
         for (Cuenta cuenta : gestor.findSAhorrosProgramados()
@@ -285,6 +285,7 @@ public class Controlador {
         interfaz.imprimirMensaje("Ingrese el monto a depositar: ");
         double monto = interfaz.leerNumero();
         gestor.depositoCuentaCorriente(numCuenta,monto);
+        CuentaCorriente cc =(CuentaCorriente) gestor.buscarCuentaCC(numCuenta);
         interfaz.imprimirMensaje("Deposito realizado exitosamente");
         double saldoCuenta = gestor.saldoCuentaCorriente(numCuenta);
         interfaz.imprimirMensaje("El saldo de la cuenta es: ");

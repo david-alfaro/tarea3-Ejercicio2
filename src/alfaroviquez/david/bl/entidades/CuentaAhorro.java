@@ -6,7 +6,7 @@ import java.time.LocalDate;
 public class CuentaAhorro extends Cuenta {
     private double tasaInteres;
     public static int incremento = 1;
-    private int numeroCuenta = 2000000;
+    private int numeroCuenta =getNumCuenta();
 
     public double getTasaInteres() {
         return tasaInteres;
@@ -16,21 +16,13 @@ public class CuentaAhorro extends Cuenta {
         this.tasaInteres = tasaInteres;
     }
 
-    public int getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(int numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
     public CuentaAhorro() {
     }
 
     public CuentaAhorro(double saldo, LocalDate fechaApertura, double tasaInteres) {
         super(saldo, fechaApertura);
         this.tasaInteres = tasaInteres;
-        this.numeroCuenta = numeroCuenta+incremento;
+        this.numeroCuenta=getNumCuenta()+incremento++;
     }
 
     public CuentaAhorro(String sourceLines){
